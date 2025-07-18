@@ -47,7 +47,7 @@ export default function DashboardPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">📊 Log Tracker Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-4">📊 Log Status Dashboard</h1>
 
       <input
         type="text"
@@ -96,50 +96,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-
-// export default async function ControlPanel() {
-
-//   const { data: logs, error } = await supabase
-//     .from("logs")
-//     .select("*")
-//     .order("timestamp", { ascending: false })
-//     .limit(100);
-
-//   if (error) {
-//     return (
-//       <div className="p-4 text-red-600">
-//         Failed to load logs: {error.message}
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="p-6">
-//       <h1 className="text-2xl font-semibold mb-4">📊 Tracker Logs</h1>
-
-//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-//         {logs.map((log) => (
-//           <div
-//             key={log.id}
-//             className="bg-white border rounded-xl shadow p-4 space-y-2"
-//           >
-//             <p className="text-sm text-gray-700">
-//               <strong>Event:</strong> {log.event}
-//             </p>
-//             <p className="text-sm text-gray-600">
-//               <strong>IP:</strong> {log.ip}
-//             </p>
-//             <p className="text-sm text-gray-600">
-//               <strong>Country:</strong> {log.country || log.geo.country || "N/A"}
-//             </p>
-//             <p className="text-xs text-gray-500">
-//               <strong>Time:</strong>{" "}
-//               {new Date(log.timestamp).toLocaleString()}
-//             </p>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }

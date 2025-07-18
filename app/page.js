@@ -43,7 +43,7 @@ export default function Home() {
           cookies_enabled: navigator.cookieEnabled,
         };
 
-        await fetch("/api/tracker", {
+        await fetch("/api/status", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export default function Home() {
   },[])
 
   const handleClick = () => {
-    fetch('api/tracker', {
+    fetch('api/status', {
       method:"POST",
       body: JSON.stringify({"event": "resume click"}),
       header: {
