@@ -1,41 +1,68 @@
-const logStore = []
+import { supabase } from "@/app/lib/supabase";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0] ||
-    null;
+  try {
+    const body = await req.json();
 
-  const userAgent = req.headers.get("user-agent") || null;
-  const language = req.headers.get("accept-language") || null;
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
+    const useragent = req.headers.get("user-agent") || null;
+    const language = req.headers.get("accept-language") || null;
 
-  const body = await req.json();
-  const { event = "unknown", fingerprint, geo, component } = body || {};
+    const {
+      event = "unknown",
+      fingerprint,
+      confidence,
+      ip: geo_ip,
+      country,
+      region,
+      city,
+      org,
+      timezone,
+      latitude,
+      longitude,
+      user_agent,
+      platform,
+      screen_resolution,
+      touch_support,
+      hardware_concurrency,
+      device_memory,
+      cookies_enabled,
+    } = body;
 
-  const logEntry = {
-    timestamp: new Date().toISOString(),
-    ip,
-    event,
-    userAgent,
-    language,
-    fingerprint,
-    geo,
-    component,
-  };
+    const { error } = await supabase.from("logs").insert({
+      timestamp: new Date().toISOString(),
+      ip,
+      event,
+      fingerprint,
+      confidence,
+      geo_ip,
+      country,
+      region,
+      city,
+      org,
+      timezone,
+      latitude,
+      longitude,
+      useragent, // from headers
+      language,
+      user_agent, // from navigator
+      platform,
+      screen_resolution,
+      touch_support,
+      hardware_concurrency,
+      device_memory,
+      cookies_enabled,
+    });
 
-  logStore.push(logEntry); // Use a real DB or store in prod
+    if (error) {
+      console.error("Supabase insert error:", error);
+      return NextResponse.json({ success: false }, { status: 500 });
+    }
 
-  return new Response(JSON.stringify({ message: "logged" }), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-}
-
-export function GET() {
-  return new Response("Method not allowed", { status: 405 });
-}
-
-export function getLogs(){
-    return logStore
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Track Error:", error);
+    return NextResponse.json({ success: false }, { status: 400 });
+  }
 }
