@@ -17,8 +17,6 @@ export default function EnrichedLogView() {
     fetchDevices()
   }, []);
 
-  // console.log(devices)
-
   async function fetchLogs() {
     const { data, error } = await supabase
       .from("enriched_logs")
@@ -101,10 +99,6 @@ export default function EnrichedLogView() {
                 const os = parser.getOS();
                 const device = parser.getDevice();
                 const browser = parser.getBrowser();
-                console.log(parser.getOS())
-                console.log(parser.getDevice())
-                console.log(parser.getBrowser())
-
 
     return (
     <tr
