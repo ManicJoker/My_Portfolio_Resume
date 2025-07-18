@@ -34,7 +34,7 @@ export default function EnrichedLogView() {
   const fetchDevices = async () => {
   const { data, error } = await supabase
     .from("logs")
-    .select("fingerprint, useragent")
+    .select("fingerprint, user_agent")
     .order("timestamp", { ascending: false })
     .limit(200);
 
@@ -42,11 +42,11 @@ export default function EnrichedLogView() {
     // Convert to object keyed by fingerprint
     const map = {};
     data.forEach((entry) => {
-      map[entry.fingerprint] = entry.useragent;
+      map[entry.fingerprint] = entry.user_agent;
     });
     setDevices(map);
   } else {
-    console.error("Failed to load useragents:", error);
+    console.error("Failed to load user agents:", error);
   }
 };
 
