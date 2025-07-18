@@ -1,8 +1,9 @@
-"use client";
+'use client'
 
 import { useEffect, useState } from "react";
 
 import { supabase } from "@/app/lib/supabase";
+import Head from "next/head";
 
 export const dynamic = 'force-dynamic';
 
@@ -46,6 +47,11 @@ export default function DashboardPage() {
   };
 
   return (
+    <>
+      <Head>
+        <title>Raw Logs (Internal)</title>
+        <meta name="robots" content="noindex" />
+      </Head>
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">📊 Log Status Dashboard</h1>
 
@@ -94,5 +100,6 @@ export default function DashboardPage() {
         </table>
       </div>
     </div>
+    </>
   );
 }
