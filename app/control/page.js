@@ -1,4 +1,4 @@
-import { getLogs } from '../api/track'
+import { getLogs } from '../api/tracker/route'
 
 export default function ControlPanel () {
     const logs = getLogs()
