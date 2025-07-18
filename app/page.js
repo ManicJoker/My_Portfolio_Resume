@@ -11,34 +11,50 @@ export default function Home() {
   const year = d.getFullYear()
 
   useEffect(() => {
-    const track = async () => {
-      const fp = await Fingerprintjs.load();
-      const results = await fp.get()
-      const geo = await fetch("https://ipapi.co/json").then(res => res.json())
+    const sendTracking = async () => {
+      try {
+        const fp = await Fingerprintjs.load();
+        const result = await fp.get();
 
-      fetch('api/tracker', {
-        method:"POST",
-        body: JSON.stringify(
-          {
-            event: "page load",
-            fingerprint: results.visitorId,
-            components: results.components,
-            geo: {
-              ip: geo.ip,
-              city: geo.city,
-              region: geo.region,
-              country: geo.country_name,
-              org: geo.org,
-            }
-          }
-        ),
-        header: {
-          "Content-Type":"application/json"
-        }
-      }).catch(e => console.error(e))
-    }
+        const geoRes = await fetch("https://ipapi.co/json");
+        const geo = await geoRes.json();
 
-    track()
+        const payload = {
+          event: "page load",
+          fingerprint: result.visitorId,
+          confidence: result.confidence?.score,
+
+          ip: geo.ip,
+          country: geo.country_name,
+          region: geo.region,
+          city: geo.city,
+          org: geo.org,
+          timezone: geo.timezone,
+          latitude: geo.latitude,
+          longitude: geo.longitude,
+
+          user_agent: navigator.userAgent,
+          language: navigator.language,
+          platform: navigator.platform,
+          screen_resolution: `${window.screen.width}x${window.screen.height}`,
+          touch_support: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+          hardware_concurrency: navigator.hardwareConcurrency,
+          device_memory: navigator.deviceMemory,
+          cookies_enabled: navigator.cookieEnabled,
+        };
+
+        await fetch("/api/tracker", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+      } catch (err) {
+        console.error("Tracking failed:", err);
+      }
+    };
+    sendTracking()
   },[])
 
   const handleClick = () => {
