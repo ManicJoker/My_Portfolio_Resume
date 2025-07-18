@@ -44,7 +44,7 @@ export async function POST(req) {
       timezone,
       latitude,
       longitude,
-      useragent, // from headers
+      user_agent, // from headers
       language,
       user_agent, // from navigator
       platform,
