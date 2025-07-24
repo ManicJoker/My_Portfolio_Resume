@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Wesley Salesberry",
+  title: "Wesley Garcia",
   description: "",
 };
 
