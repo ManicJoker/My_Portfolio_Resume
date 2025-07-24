@@ -69,7 +69,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-stone-400 flex flex-col item-center justify-center p-6 font-sans text-gray-800">
         <div className="max-w-xl w-full bg-white shadow-xl rounded-2xl p-8">
-          <h1 className="text-3xl font-bold mb-2"><span className="text-orange-300">Wesley</span> Salesberry</h1>
+          <h1 className="text-3xl font-bold mb-2"><span className="text-orange-300">Wesley</span> Garcia</h1>
           <p className="text-gray-600 mb-6">System Analyst | Software Engineer</p>
           <hr className="my-6 border-t" />
           <p className="mb-4">Experienced System Analyst and System Programmer with a strong background in mainframe and distributed systems. Skilled in system design, performance tuning, and automation of complex IT infrastructures. Adept at bridging technical and business needs to deliver scalable, efficient solutions.</p>

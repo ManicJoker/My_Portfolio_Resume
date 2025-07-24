@@ -107,7 +107,30 @@ export default function EnrichedLogView() {
     >
       <td className="p-2 font-bold">{log.suspicion_score}</td>
       <td className="p-2">{log.fingerprint}</td>
-      <td className="p-2">{log.is_suspicious ? "✅" : "—"}</td>
+<td
+  className={`p-2 font-bold text-white ${
+    log.suspicion_score >= 0.95
+      ? "bg-green-700"
+      : log.suspicion_score >= 0.8
+      ? "bg-green-500"
+      : log.suspicion_score >= 0.6
+      ? "bg-yellow-400 text-black"
+      : log.suspicion_score >= 0.4
+      ? "bg-orange-500"
+      : "bg-red-700"
+  }`}
+>
+  {log.suspicion_score.toFixed(1)}{"% "}
+  {log.suspicion_score >= 0.95
+    ? "✅"
+    : log.suspicion_score >= 0.8
+    ? "🟢"
+    : log.suspicion_score >= 0.6
+    ? "⚠️"
+    : log.suspicion_score >= 0.4
+    ? "❗"
+    : "🚨"}
+</td>
       <td className="p-2">
         {(log.reason_tags || []).map((tag) => (
           <span
